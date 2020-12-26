@@ -224,3 +224,26 @@ EOT;
         return $icon;
     }
 }
+
+if (!function_exists('build_editor')) {
+    function build_editor($name, $value = null, $options = []) {
+        $options = is_array($options) ? $options : explode(',', $options);
+        return Form::editor($name, $value, $options);
+    }
+}
+
+if (!function_exists('build_selectpicker')) {
+    function build_selectpicker(string $name, array $list = [], string $selected = null, array $options = []) {
+        $options = is_array($options) ? $options : explode(',', $options);
+        return Form::selectpicker($name, $list, $selected, $options);
+    }
+}
+
+// selectpage(string $name, string $value, string $url, string $field = null, string $primaryKey = null, array $options = []) static 动态下拉列表组件
+// 动态下拉列表组件
+if (!function_exists('build_selectpage')) {
+    function build_selectpage(string $name, string $value, string $url, string $field = null, string $primaryKey = null, array $options = []) {
+        $options = is_array($options) ? $options : explode(',', $options);
+        return Form::selectpage($name, $value, $url, $field, $primaryKey, $options);
+    }
+}

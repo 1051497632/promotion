@@ -20,4 +20,8 @@ class MoneyLog Extends Model
     // 追加属性
     protected $append = [
     ];
+
+    // 消费类型
+    const TARGET_TYPE_RECHARGE  = 1; // 充值
+    const TARGET_TYPE_CONSUME   = 2; // 消费
 }

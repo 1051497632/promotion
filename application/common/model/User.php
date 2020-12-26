@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use think\Exception;
 use think\Model;
 
 /**
@@ -85,18 +86,24 @@ class User extends Model
      * @param int    $user_id 会员ID
      * @param string $memo    备注
      */
-    public static function money($money, $user_id, $memo)
+    public static function money($money, $user_id, $memo, $targetType = MoneyLog::TARGET_TYPE_RECHARGE, $targetId = 0)
     {
         $user = self::get($user_id);
+        if ($money < 0) {
+            if ($user['money'] + $money < 0) {
+                throw new Exception('用户余额不足！');
+            }
+        }
         if ($user && $money != 0) {
             $before = $user->money;
-            //$after = $user->money + $money;
             $after = function_exists('bcadd') ? bcadd($user->money, $money, 2) : $user->money + $money;
             //更新会员信息
             $user->save(['money' => $after]);
             //写入日志
-            MoneyLog::create(['user_id' => $user_id, 'money' => $money, 'before' => $before, 'after' => $after, 'memo' => $memo]);
+            MoneyLog::create(['user_id' => $user_id, 'money' => $money, 'before' => $before, 'after' => $after, 'memo' => $memo, 'target_type' => $targetType, 'target_id' => $targetId]);
+            return true;
         }
+        return false;
     }
 
     /**

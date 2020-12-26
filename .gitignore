@@ -23,3 +23,8 @@
 /app/Config/core.php
 /app/Config/database.php
 /vendors/*
+
+# 项目不需要上传的文件
+/runtime/*
+/application/admin/command/Install/install.lock
+/application/extra/site.php
