@@ -10,11 +10,29 @@ class User extends Validate
      * 验证规则
      */
     protected $rule = [
-        'username' => 'require|regex:\w{3,32}|unique:user',
+        'username' => 'regex:\w{3,32}|unique:user',
         'nickname' => 'require|unique:user',
         'password' => 'regex:\S{6,32}',
-        'email'    => 'require|email|unique:user',
-        'mobile'   => 'unique:user'
+        'email'    => 'email|unique:user',
+        'mobile'   => 'require|unique:user',
+        'company_name'  => 'require|max:50',
+        'wechat_number' => 'max:32',
+        'wechat_qrcode' => 'max:255',
+        'pre_payment'   => 'number',
+        'balance_payment'   => 'number',
+        'full_payment'   => 'number',
+        'cooperative_way'   => 'number',
+        'idcard_front'   => 'max:255',
+        'idcard_reverse'   => 'max:255',
+        'business_certificate'   => 'max:255',
+        'industry_name'   => 'max:50',
+        'province_name'   => 'max:20',
+        'city_name'   => 'max:10',
+        'area_name'   => 'max:10',
+        'is_edit'   => 'number',
+        'promotion_time'   => 'date',
+        'start_time'   => 'date',
+        'end_time'   => 'date',
     ];
 
     /**
@@ -31,7 +49,7 @@ class User extends Validate
      * 验证场景
      */
     protected $scene = [
-        'add'  => [],
+        'add'  => ['username', 'email', 'nickname', 'password', 'email', 'mobile'],
         'edit' => ['username', 'email', 'nickname', 'password', 'email', 'mobile'],
     ];
 

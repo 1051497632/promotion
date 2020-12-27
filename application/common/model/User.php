@@ -21,6 +21,14 @@ class User extends Model
         'url',
     ];
 
+    // 用户状态
+    const STATUS_NORMAL = 'normal'; // 正常
+    const STATUS_HIDDEN = 'hidden'; // 禁用
+
+    // 用户性别
+    const GENDER_MALE   = 1; // 男
+    const GENDER_FEMALE = 0; // 女
+
     /**
      * 获取个人URL
      * @param   string $value
@@ -141,5 +149,13 @@ class User extends Model
             }
         }
         return $level;
+    }
+
+    /**
+     * 用户删除事件
+     */
+    public static function delEvelt($id)
+    {
+        model('CustomInfo')->where('user_id', $id)->delete();
     }
 }

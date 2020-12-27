@@ -1,0 +1,157 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    {:token()}
+    <input type="hidden" name="row[group_id]" value="0">
+    <div class="form-group">
+        <label for="c-nickname" class="control-label col-xs-12 col-sm-2">{:__('Nickname')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-nickname" data-rule="required" class="form-control" name="row[nickname]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-mobile" class="control-label col-xs-12 col-sm-2">{:__('Mobile')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-mobile" data-rule="required" class="form-control" name="row[mobile]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-password" class="control-label col-xs-12 col-sm-2">{:__('Password')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-password" data-rule="password" class="form-control" name="row[password]" type="password" value="" placeholder="{:__('Leave password blank if dont want to change')}" autocomplete="new-password" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-email" class="control-label col-xs-12 col-sm-2">{:__('Email')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-email" data-rule="" class="form-control" name="row[email]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-avatar" class="control-label col-xs-12 col-sm-2">{:__('Avatar')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-avatar" data-rule="" class="form-control" size="50" name="row[avatar]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="faupload-avatar" class="btn btn-danger faupload" data-input-id="c-avatar" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-avatar"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-avatar" class="btn btn-primary fachoose" data-input-id="c-avatar" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-avatar"></span>
+            </div>
+            <ul class="row list-inline faupload-preview" id="p-avatar"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-gender" class="control-label col-xs-12 col-sm-2">{:__('Gender')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[gender]', ['1'=>__('Male'), '0'=>__('Female')])}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-company_name" class="control-label col-xs-12 col-sm-2">{:__('Company_name')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-company_name" data-rule="required" class="form-control" name="custom_info[company_name]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-wechat_number" class="control-label col-xs-12 col-sm-2">{:__('Wechat_number')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-wechat_number" class="form-control" name="custom_info[wechat_number]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-wechat_qrcode" class="control-label col-xs-12 col-sm-2">{:__('Wechat_qrcode')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-wechat_qrcode" class="form-control" name="custom_info[wechat_qrcode]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-pre_payment" class="control-label col-xs-12 col-sm-2">{:__('Pre_payment')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-pre_payment" class="form-control" name="custom_info[pre_payment]" type="number" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-balance_payment" class="control-label col-xs-12 col-sm-2">{:__('Balance_payment')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-balance_payment" class="form-control" name="custom_info[balance_payment]" type="number" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-full_payment" class="control-label col-xs-12 col-sm-2">{:__('Full_payment')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-full_payment" class="form-control" name="custom_info[full_payment]" type="number" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="cooperative_way" class="control-label col-xs-12 col-sm-2">{:__('Cooperative_way')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('custom_info[cooperative_way]', ['1'=>__('Cooperative_way_common'), '2'=>__('Cooperative_way_baidu'), '3'=>__('Cooperative_way_news'), '4'=>__('Cooperative_way_thousands_word')], 1)}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-idcard_front" class="control-label col-xs-12 col-sm-2">{:__('Idcard_front')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_image('custom_info[idcard_front]', '', [], [], [], [])}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-idcard_reverse" class="control-label col-xs-12 col-sm-2">{:__('Idcard_reverse')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_image('custom_info[idcard_reverse]', '', [], [], [], [])}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-business_certificate" class="control-label col-xs-12 col-sm-2">{:__('Business_certificate')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_image('custom_info[business_certificate]', '', [], [], [], [])}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-industry_name" class="control-label col-xs-12 col-sm-2">{:__('Industry_name')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-industry_name" class="form-control" name="custom_info[industry_name]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-province_name" class="control-label col-xs-12 col-sm-2">地址:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input readonly type="text" data-toggle="city-picker" name="custom_info[district_info]" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-promotion_time" class="control-label col-xs-12 col-sm-2">{:__('Promotion_time')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-promotion_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" name="custom_info[promotion_time]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-start_time" class="control-label col-xs-12 col-sm-2">{:__('Start_time')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-start_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" name="custom_info[start_time]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-end_time" class="control-label col-xs-12 col-sm-2">{:__('End_time')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-end_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" name="custom_info[end_time]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-is_edit" class="control-label col-xs-12 col-sm-2">{:__('is_edit')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            {:build_radios('custom_info[is_edit]', ['1'=>__('Edit_yes'), '2'=>__('Edit_no')], 1)}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="content" class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[status]', ['normal'=>__('Normal'), 'hidden'=>__('Hidden')])}
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

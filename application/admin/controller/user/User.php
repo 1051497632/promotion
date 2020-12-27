@@ -2,8 +2,15 @@
 
 namespace app\admin\controller\user;
 
+use app\admin\validate\CustomInfo;
+use app\admin\validate\User as ValidateUser;
 use app\common\controller\Backend;
 use app\common\library\Auth;
+use app\common\model\CustomInfo as ModelCustomInfo;
+use think\Db;
+use think\Exception;
+use think\exception\PDOException;
+use think\exception\ValidateException;
 
 /**
  * 会员管理
@@ -14,7 +21,6 @@ class User extends Backend
 {
 
     protected $relationSearch = true;
-    protected $searchFields = 'id,username,nickname';
 
     /**
      * @var \app\admin\model\User
@@ -39,9 +45,9 @@ class User extends Backend
             if ($this->request->request('keyField')) {
                 return $this->selectpage();
             }
-            list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['user.nickname', 'custominfo.company_name']);
             $list = $this->model
-                ->with('group')
+                ->with(['custominfo'])
                 ->where($where)
                 ->order($sort, $order)
                 ->paginate($limit);
@@ -64,7 +70,81 @@ class User extends Backend
         if ($this->request->isPost()) {
             $this->token();
         }
-        return parent::add();
+        
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a", []);
+            $custom_info = $this->request->post("custom_info/a", []);
+            if ($params) {
+                $params = $this->preExcludeFields($params);
+                $custom_info = $this->preExcludeFields($custom_info);
+
+                $result = false;
+
+                $userValidate = new ValidateUser();
+                if (!$userValidate->check($params, [], 'add')) {
+                    $this->error($userValidate->getError());
+                }
+
+                $validate = new CustomInfo();
+                if (!$validate->check($custom_info, [], 'add')) {
+                    $this->error($validate->getError());
+                }
+
+                if ($custom_info['promotion_time']) {
+                    $custom_info['promotion_time'] = strtotime($custom_info['promotion_time']);
+                } else {
+                    $custom_info['promotion_time'] = 0;
+                }
+                if ($custom_info['start_time']) {
+                    $custom_info['start_time'] = strtotime($custom_info['start_time']);
+                } else {
+                    $custom_info['start_time'] = 0;
+                }
+                if ($custom_info['end_time']) {
+                    $custom_info['end_time'] = strtotime($custom_info['end_time']);
+                } else {
+                    $custom_info['end_time'] = 0;
+                }
+
+                if (!empty($custom_info['district_info'])) {
+                    $districtInfo = explode('/', $custom_info['district_info']);
+                    if (count($districtInfo) >= 1) {
+                        $custom_info['province_name'] = current($districtInfo);
+                    }
+                    if (count($districtInfo) >= 2) {
+                        $custom_info['city_name'] = next($districtInfo);
+                    }
+                    if (count($districtInfo) >= 3) {
+                        $custom_info['area_name'] = next($districtInfo);
+                    }
+                }
+
+                Db::startTrans();
+                try {
+                    $result = $this->model->allowField(true)->save($params);
+
+                    $custom_info['user_id'] = $this->model['id'];
+                    ModelCustomInfo::create($custom_info, true);
+                    Db::commit();
+                } catch (ValidateException $e) {
+                    Db::rollback();
+                    $this->error($e->getMessage());
+                } catch (PDOException $e) {
+                    Db::rollback();
+                    $this->error($e->getMessage());
+                } catch (Exception $e) {
+                    Db::rollback();
+                    $this->error($e->getMessage());
+                }
+                if ($result !== false) {
+                    $this->success();
+                } else {
+                    $this->error(__('No rows were inserted'));
+                }
+            }
+            $this->error(__('Parameter %s can not be empty', ''));
+        }
+        return $this->view->fetch();
     }
 
     /**
@@ -80,8 +160,115 @@ class User extends Backend
         if (!$row) {
             $this->error(__('No Results were found'));
         }
-        $this->view->assign('groupList', build_select('row[group_id]', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
-        return parent::edit($ids);
+        
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a", []);
+            $custom_info = $this->request->post("custom_info/a", []);
+            if ($params) {
+                $params = $this->preExcludeFields($params);
+                $custom_info = $this->preExcludeFields($custom_info);
+
+                $result = false;
+
+                $userValidate = new ValidateUser();
+                if (!$userValidate->check($params, [], 'edit')) {
+                    $this->error($userValidate->getError());
+                }
+
+                $validate = new CustomInfo();
+                if (!$validate->check($custom_info, [], 'edit')) {
+                    $this->error($validate->getError());
+                }
+
+                if ($custom_info['promotion_time']) {
+                    $custom_info['promotion_time'] = strtotime($custom_info['promotion_time']);
+                } else {
+                    $custom_info['promotion_time'] = 0;
+                }
+                if ($custom_info['start_time']) {
+                    $custom_info['start_time'] = strtotime($custom_info['start_time']);
+                } else {
+                    $custom_info['start_time'] = 0;
+                }
+                if ($custom_info['end_time']) {
+                    $custom_info['end_time'] = strtotime($custom_info['end_time']);
+                } else {
+                    $custom_info['end_time'] = 0;
+                }
+                
+                if (!empty($custom_info['district_info'])) {
+                    $districtInfo = explode('/', $custom_info['district_info']);
+                    if (count($districtInfo) >= 1) {
+                        $custom_info['province_name'] = current($districtInfo);
+                    }
+                    if (count($districtInfo) >= 2) {
+                        $custom_info['city_name'] = next($districtInfo);
+                    }
+                    if (count($districtInfo) >= 3) {
+                        $custom_info['area_name'] = next($districtInfo);
+                    }
+                }
+
+                Db::startTrans();
+                try {
+                    $result = $row->allowField(true)->save($params);
+
+                    $customInfo = ModelCustomInfo::getInfoByUserId($row['id']);
+                    if ($customInfo) {
+                        $customInfo->allowField(true)->save($custom_info);
+                    } else {
+                        $custom_info['user_id'] = $row['id'];
+                        ModelCustomInfo::create($custom_info, true);
+                    }
+                    
+                    Db::commit();
+                } catch (ValidateException $e) {
+                    Db::rollback();
+                    $this->error($e->getMessage());
+                } catch (PDOException $e) {
+                    Db::rollback();
+                    $this->error($e->getMessage());
+                } catch (Exception $e) {
+                    Db::rollback();
+                    $this->error($e->getMessage());
+                }
+                if ($result !== false) {
+                    $this->success();
+                } else {
+                    $this->error(__('No rows were updated'));
+                }
+            }
+            $this->error(__('Parameter %s can not be empty', ''));
+        } else {
+            $this->view->assign("row", $row);
+            $customInfo = ModelCustomInfo::getInfoByUserId($row['id']);
+            if ($customInfo) {
+                if ($customInfo['promotion_time'] > 0) {
+                    $customInfo['promotion_time'] = date('Y-m-d H:i:s', $customInfo['promotion_time']);
+                } else {
+                    $customInfo['promotion_time'] = '';
+                }
+                if ($customInfo['start_time'] > 0) {
+                    $customInfo['start_time'] = date('Y-m-d H:i:s', $customInfo['start_time']);
+                } else {
+                    $customInfo['start_time'] = '';
+                }
+                if ($customInfo['end_time'] > 0) {
+                    $customInfo['end_time'] = date('Y-m-d H:i:s', $customInfo['end_time']);
+                } else {
+                    $customInfo['end_time'] = '';
+                }
+                
+                if ($customInfo['province_name']) {
+                    $customInfo['district_info'] = $customInfo['province_name'] . '/' .  $customInfo['city_name'] . '/' .  $customInfo['area_name'];
+                }
+            } else {
+                $customInfo = [];
+            }
+            
+            $this->view->assign("custom_info", $customInfo ? $customInfo : []);
+        }
+        return $this->view->fetch();
     }
 
     /**

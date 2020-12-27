@@ -111,4 +111,9 @@ class User extends Model
         return $this->belongsTo('UserGroup', 'group_id', 'id', [], 'LEFT')->setEagerlyType(0);
     }
 
+    public function custominfo()
+    {
+        return $this->belongsTo('app\common\model\CustomInfo', 'id', 'user_id', [], 'LEFT')->setEagerlyType(0);
+    }
+
 }

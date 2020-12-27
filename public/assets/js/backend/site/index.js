@@ -33,7 +33,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'remark', title: __('Remark'), operate: false},
                         {field: 'show_page', title: __("Show_page"), searchList: {"1":__('Show_page_yes'), "2":__('Show_page_no')}, formatter: Table.api.formatter.status, custom: {1: 'success', 2: 'danger'}},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
+                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate, buttons: [
+                            {
+                                name: 'detail',
+                                text: '查看网站',
+                                icon: 'fa fa-list',
+                                classname: 'btn btn-info btn-xs btn-detail addtabsit',
+                                url: 'site/browse_log/index?site_id={id}'
+                            }
+                        ]}
                     ]
                 ]
             });

@@ -239,11 +239,19 @@ if (!function_exists('build_selectpicker')) {
     }
 }
 
-// selectpage(string $name, string $value, string $url, string $field = null, string $primaryKey = null, array $options = []) static 动态下拉列表组件
 // 动态下拉列表组件
 if (!function_exists('build_selectpage')) {
     function build_selectpage(string $name, string $value, string $url, string $field = null, string $primaryKey = null, array $options = []) {
         $options = is_array($options) ? $options : explode(',', $options);
         return Form::selectpage($name, $value, $url, $field, $primaryKey, $options);
+    }
+}
+
+// 图片上传
+if (!function_exists('build_image')) {
+    function build_image(string $name = null, string $value, array $inputAttr = [], array $uploadAttr = [], array $chooseAttr = [], array $previewAttr = []) {
+        $defaultChooseAttr = ['class' => 'btn btn-primary fachoose'];
+        $chooseAttr = array_merge($defaultChooseAttr, $chooseAttr);
+        return Form::image($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
     }
 }

@@ -15,4 +15,7 @@ return [
     'app_end'      => [
         'app\\admin\\behavior\\AdminLog',
     ],
+    'user_delete_successed' => [
+        ['app\\common\\behavior\\User', 'user_delete_successed']
+    ]
 ];
