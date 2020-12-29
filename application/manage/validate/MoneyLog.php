@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\validate;
+namespace app\manage\validate;
 
 use think\Validate;
 
@@ -22,9 +22,9 @@ class MoneyLog extends Validate
      * 验证场景
      */
     protected $scene = [
-        'add'  => ['money', 'user_id'],
+        'add'  => ['money', 'require'],
     ];
-
+    
     public function __construct(array $rules = [], $message = [], $field = [])
     {
         $this->field = [

@@ -7,6 +7,7 @@ use app\admin\validate\User as ValidateUser;
 use app\common\controller\Backend;
 use app\common\library\Auth;
 use app\common\model\CustomInfo as ModelCustomInfo;
+use app\manage\library\Auth as LibraryAuth;
 use think\Db;
 use think\Exception;
 use think\exception\PDOException;
@@ -287,6 +288,26 @@ class User extends Backend
         }
         Auth::instance()->delete($row['id']);
         $this->success();
+    }
+
+    /**
+     * 自动登录
+     */
+    public function auto_login()
+    {
+        $id = $this->request->get('id');
+        if (!$id) {
+            $this->error('id不能为空！');
+        }
+        $userInfo = model('User')->where('id', $id)->find();
+        if (!$userInfo) {
+            $this->error('客户不存在！');
+        }
+        
+        $mamnageAuth = new LibraryAuth();
+        $mamnageAuth->doLoginEvent($userInfo);
+
+        $this->success('登录成功！', '/manage/dashboard?ref=addtabs');
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\validate;
+namespace app\manage\validate;
 
 use think\Validate;
 
@@ -28,7 +28,7 @@ class Site extends Validate
         'add'  => ['title', 'keyword', 'mobile', 'remark', 'page_show'],
         'edit' => ['title', 'keyword', 'mobile', 'remark', 'page_show'],
     ];
-
+    
     public function __construct(array $rules = [], $message = [], $field = [])
     {
         $this->field = [

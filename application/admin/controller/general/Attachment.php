@@ -55,6 +55,7 @@ class Attachment extends Backend
             $list = $this->model
                 ->where($mimetypeQuery)
                 ->where($where)
+                ->where('user_id', 0)
                 ->order($sort, $order)
                 ->paginate($limit);
 

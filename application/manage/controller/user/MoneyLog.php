@@ -1,13 +1,22 @@
 <?php
 
-namespace app\admin\controller\site;
+namespace app\manage\controller\user;
 
-use app\common\controller\Backend;
+use app\admin\validate\MoneyLog as ValidateMoneyLog;
+use app\common\controller\Manage;
+use app\common\model\MoneyLog as ModelMoneyLog;
+use app\common\model\User;
+use think\Db;
+use think\Exception;
+use think\exception\PDOException;
+use think\exception\ValidateException;
 
 /**
+ * 会员余额变动管理
+ *
  * @icon fa fa-circle-o
  */
-class Index extends Backend
+class MoneyLog extends Manage
 {
     
     protected $model = null;
@@ -15,12 +24,11 @@ class Index extends Backend
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = model('Site');
+        $this->model = model('MoneyLog');
     }
-
+    
     public function index()
     {
-        $this->searchFields = ['title', 'keyword'];
         //设置过滤方法
         $this->request->filter(['strip_tags', 'trim']);
         if ($this->request->isAjax()) {
@@ -28,11 +36,11 @@ class Index extends Backend
             if ($this->request->request('keyField')) {
                 return $this->selectpage();
             }
-            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['user.nickname', 'site.title'], true);
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['memo'], true);
 
             $list = $this->model
-                ->with(['user'])
                 ->where($where)
+                ->where('user_id', $this->auth->id)
                 ->order($sort, $order)
                 ->paginate($limit);
 
@@ -43,22 +51,27 @@ class Index extends Backend
         return $this->view->fetch();
     }
 
+    // 余额充值
     public function add()
     {
-        $this->modelValidate = 'Site.add';
-        return parent::add();
+        $this->error('不能添加');
     }
 
+    // 编辑
     public function edit($ids = '')
     {
-        $this->modelValidate = 'Site.edit';
-        return parent::edit();
+        $this->error('不能编辑');
+    }
+
+    // 删除
+    public function del($ids = '')
+    {
+        $this->error('不能删除');
     }
 
     public function import()
     {
-        $this->error('不能导入！');
+        parent::import();
     }
-    
 
 }

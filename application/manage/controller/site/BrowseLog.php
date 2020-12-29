@@ -1,13 +1,13 @@
 <?php
 
-namespace app\admin\controller\site;
+namespace app\manage\controller\site;
 
-use app\common\controller\Backend;
+use app\common\controller\Manage;
 
 /**
- * @icon fa fa-circle-o
+ * 浏览记录
  */
-class Index extends Backend
+class BrowseLog extends Manage
 {
     
     protected $model = null;
@@ -15,12 +15,12 @@ class Index extends Backend
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = model('Site');
+        $this->model = model('SiteBrowseLog');
     }
 
     public function index()
     {
-        $this->searchFields = ['title', 'keyword'];
+        $this->searchFields = ['ip'];
         //设置过滤方法
         $this->request->filter(['strip_tags', 'trim']);
         if ($this->request->isAjax()) {
@@ -28,11 +28,12 @@ class Index extends Backend
             if ($this->request->request('keyField')) {
                 return $this->selectpage();
             }
-            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['user.nickname', 'site.title'], true);
+            
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['ip']);
 
             $list = $this->model
-                ->with(['user'])
                 ->where($where)
+                ->where('user_id', $this->auth->id)
                 ->order($sort, $order)
                 ->paginate($limit);
 
@@ -45,14 +46,17 @@ class Index extends Backend
 
     public function add()
     {
-        $this->modelValidate = 'Site.add';
-        return parent::add();
+        $this->error('不能添加');
     }
 
     public function edit($ids = '')
     {
-        $this->modelValidate = 'Site.edit';
-        return parent::edit();
+        $this->error('不能修改');
+    }
+
+    public function del($ids = '')
+    {
+        $this->error('不能删除');
     }
 
     public function import()

@@ -25,7 +25,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id'), sortable: true},
-                        {field: 'username', title: __('Username'), operate: 'LIKE'},
+                        // {field: 'username', title: __('Username'), operate: 'LIKE'},
                         {field: 'nickname', title: __('Nickname'), operate: 'LIKE'},
                         {field: 'email', title: __('Email'), operate: 'LIKE'},
                         {field: 'mobile', title: __('Mobile'), operate: 'LIKE'},
@@ -35,6 +35,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'money', title: __('Money'), operate: 'BETWEEN', sortable: true},
                         {field: 'successions', title: __('Successions'), visible: false, operate: 'BETWEEN', sortable: true},
                         {field: 'maxsuccessions', title: __('Maxsuccessions'), visible: false, operate: 'BETWEEN', sortable: true},
+                        {field: 'id', title: '快捷登录', formatter: Controller.api.formatter.manageUrl, operate: false},
                         {field: 'logintime', title: __('Logintime'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
                         {field: 'loginip', title: __('Loginip'), formatter: Table.api.formatter.search},
                         // {field: 'jointime', title: __('Jointime'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
@@ -72,6 +73,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         api: {
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"));
+            },
+            formatter: {
+                manageUrl: function (value, row, index) {
+                    var url = Fast.api.cdnurl('/manage/index/login');
+                    var autoLoginUrl = 'user/auto_login?id=' + value;
+                    return '<div class="input-group input-group-sm" style="width:150px;margin:0 auto;"><input type="text" class="form-control input-sm" value="' + url + '"><span class="input-group-btn input-group-sm"><a href="' + autoLoginUrl + '" target="_blank" class="btn btn-default btn-sm"><i class="fa fa-link"></i></a></span></div>';
+                }
             }
         }
     };
