@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="{$siteInfo.keyword}">
         <meta name="author" content="">
         <meta http-equiv="keywords" name="keyword" content="{$siteInfo.keyword}">
 
@@ -197,7 +197,7 @@
             }
             .mip-fill-content .wechat-model-layer .wechat-model-success .button span {
                 color: #fff;
-                font-size: .9375rem;
+                font-size: 15px;
             }
             .mip-fill-content .wechat-model-layer .guide-img {
                 margin-top: 17px;
@@ -293,14 +293,15 @@
 
     <body id="page-top">
         <main id="mainbody">
-            {if $isMobile}
+            {if $isMobile && !empty($siteInfo.custom_info.wechat_number)}
                 <div class="wechat-top">
                     <span class="wechat-left">添加微信好友了解详情</span>
-                    <span class="wechat-right">
-                        <i>+</i>
-                        关注
+                    <span class="wechat-right" onclick="copy('wechat')">
+                        <i>+</i>关注
                     </span>
                 </div>
+
+                <input id="wechat" style="opacity: 0;height: 0;" value="{$siteInfo.custom_info.wechat_number}" />
             {/if}
             <div class="content">
                 {if $isMobile}
@@ -341,9 +342,6 @@
                     </div> 
                     <!---->
                 </div>
-
-                <!-- <input id="wechat" style="opacity: 0;height: 0;" value="{$siteInfo.custom_info.wechat_number}"> -->
-                <span id="wechat" style="opacity: 0;height: 0;">{$siteInfo.custom_info.wechat_number}</span>
             </div>
         {else}
             <div class="bottom-nav">
@@ -376,6 +374,16 @@
     <script>
         var id = "{$siteInfo.browse_log_id}";
         var site_id = "{$siteInfo.id}";
+
+        function copy(id){
+            const range = document.createRange();
+            range.selectNode(document.getElementById(id));
+
+            const selection = window.getSelection();
+            if(selection.rangeCount > 0) selection.removeAllRanges();
+            selection.addRange(range);
+            document.execCommand('copy');
+        }
     </script>
 
 </html>

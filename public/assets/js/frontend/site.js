@@ -53,9 +53,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'layer', 'fast'], function ($
 
             if ($('.wechat-right').length > 0) {
                 $('.wechat-right').click(function () {
-                    self.api.copy('wechat');
                     $('.mip-fill-content').css('display', 'flex');
-                })
+                });
             }
 
             if ($('.mip-fill-content').length > 0) {
@@ -65,17 +64,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'layer', 'fast'], function ($
                 $('.mip-fill-content .openWechat').click(function () {
                     document.location.href = 'weixin://';
                 });
-            }
-        },
-        api: {
-            copy: function (id) {
-                const range = document.createRange();
-                range.selectNode(document.getElementById(id));
-        
-                const selection = window.getSelection();
-                if(selection.rangeCount > 0) selection.removeAllRanges();
-                selection.addRange(range);
-                document.execCommand('copy');
             }
         }
     };
