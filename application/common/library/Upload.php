@@ -341,9 +341,15 @@ class Upload
             'sha1'        => $sha1,
             'extparam'    => '',
         );
+
         $attachment = new Attachment();
-        $attachment->data(array_filter($params));
-        $attachment->save();
+        $attachment = $attachment->where('url', $params['url'])->where('admin_id', 'GT', 0)->find();
+        $params = array_filter($params);
+        if ($attachment) {
+            $attachment->save($params);
+        } else {
+            $attachment = Attachment::create($params, true);
+        }
 
         \think\Hook::listen("upload_after", $attachment);
         return $attachment;

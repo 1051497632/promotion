@@ -26,7 +26,7 @@
             <input id="c-email" data-rule="" class="form-control" name="row[email]" type="text" value="{$row.email|htmlentities}">
         </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="c-avatar" class="control-label col-xs-12 col-sm-2">{:__('Avatar')}:</label>
         <div class="col-xs-12 col-sm-8">
             <div class="input-group">
@@ -40,18 +40,12 @@
             <ul class="row list-inline faupload-preview" id="p-avatar"></ul>
         </div>
     </div>
-    <!-- <div class="form-group">
+    <div class="form-group">
         <label for="c-level" class="control-label col-xs-12 col-sm-2">{:__('Level')}:</label>
         <div class="col-xs-12 col-sm-4">
             <input id="c-level" data-rule="required" class="form-control" name="row[level]" type="number" value="{$row.level}">
         </div>
     </div> -->
-    <div class="form-group">
-        <label for="c-gender" class="control-label col-xs-12 col-sm-2">{:__('Gender')}:</label>
-        <div class="col-xs-12 col-sm-8">
-            {:build_radios('row[gender]', ['1'=>__('Male'), '0'=>__('Female')], $row['gender'])}
-        </div>
-    </div>
      <!-- <div class="form-group">
         <label for="c-birthday" class="control-label col-xs-12 col-sm-2">{:__('Birthday')}:</label>
         <div class="col-xs-12 col-sm-4">
@@ -138,8 +132,8 @@
     </div>
     <div class="form-group">
         <label for="c-wechat_qrcode" class="control-label col-xs-12 col-sm-2">{:__('Wechat_qrcode')}:</label>
-        <div class="col-xs-12 col-sm-4">
-            <input id="c-wechat_qrcode" class="form-control" name="custom_info[wechat_qrcode]" type="text" value="{$custom_info.wechat_qrcode|default="0"}">
+        <div class="col-xs-12 col-sm-8">
+            {:build_image('custom_info[wechat_qrcode]', isset($custom_info.wechat_qrcode) ? $custom_info.wechat_qrcode : '', [], [], [], [])}
         </div>
     </div>
     <div class="form-group">
@@ -217,7 +211,7 @@
     <div class="form-group">
         <label for="c-is_edit" class="control-label col-xs-12 col-sm-2">{:__('is_edit')}:</label>
         <div class="col-xs-12 col-sm-4">
-            {:build_radios('custom_info[is_edit]', ['1'=>__('Edit_yes'), '2'=>__('Edit_no')], isset($custom_info['status']) ? $custom_info['status'] : 1)}
+            {:build_radios('custom_info[is_edit]', ['1'=>__('Edit_yes'), '2'=>__('Edit_no')], isset($custom_info['is_edit']) ? $custom_info['is_edit'] : 1)}
         </div>
     </div>
     <div class="form-group">

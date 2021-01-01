@@ -20,6 +20,15 @@ class BrowseLog extends Manage
 
     public function index()
     {
+        $siteId = $this->request->get('site_id');
+        if (!$siteId) {
+            $this->error('siteid不能为空!');
+        }
+        $siteInfo = model('Site')->where('id', $siteId)->where('user_id', $this->auth->id)->find();
+        if (!$siteInfo) {
+            $this->error('网站不存在!');
+        }
+
         $this->searchFields = ['ip'];
         //设置过滤方法
         $this->request->filter(['strip_tags', 'trim']);
@@ -33,7 +42,7 @@ class BrowseLog extends Manage
 
             $list = $this->model
                 ->where($where)
-                ->where('user_id', $this->auth->id)
+                ->where('site_id', $siteInfo['id'])
                 ->order($sort, $order)
                 ->paginate($limit);
 

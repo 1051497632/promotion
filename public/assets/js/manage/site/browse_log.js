@@ -26,7 +26,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
-                        {field: 'site_id', title: __('Site_id'), visible: false},
+                        {field: 'site_id', title: __('Site_id'), visible: false, operate: false},
                         {field: 'ip', title: __('Ip'), operate: 'LIKE'},
                         {field: 'time', title: __('Time'), operate: false},
                         {field: 'createtime', title: __('Create time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},

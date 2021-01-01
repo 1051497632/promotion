@@ -52,14 +52,4 @@ class Attachment extends Model
         ];
         return $data;
     }
-
-    protected static function init()
-    {
-        // 如果已经上传该资源，则不再记录
-        self::beforeInsert(function ($model) {
-            if (self::where('url', '=', $model['url'])->where('storage', $model['storage'])->find()) {
-                return false;
-            }
-        });
-    }
 }

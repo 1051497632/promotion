@@ -4,9 +4,6 @@ namespace app\admin\controller\site;
 
 use app\common\controller\Backend;
 
-/**
- * @icon fa fa-circle-o
- */
 class Index extends Backend
 {
     
@@ -52,7 +49,7 @@ class Index extends Backend
     public function edit($ids = '')
     {
         $this->modelValidate = 'Site.edit';
-        return parent::edit();
+        return parent::edit($ids);
     }
 
     public function import()

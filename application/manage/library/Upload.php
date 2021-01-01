@@ -61,9 +61,10 @@ class Upload extends LibraryUpload
             }
         }
         $this->file = $file;
+        $manageId = (int)session('manage.id');
         $params = array(
             'admin_id'    => 0,
-            'user_id'     => (int)session('manage.id'),
+            'user_id'     => $manageId,
             'filename'    => substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
             'filesize'    => $this->fileInfo['size'],
             'imagewidth'  => $this->fileInfo['imagewidth'],
@@ -78,10 +79,15 @@ class Upload extends LibraryUpload
             'extparam'    => '',
         );
         $attachment = new Attachment();
-        $attachment->data(array_filter($params));
-        $attachment->save();
-
-        \think\Hook::listen("upload_after", $attachment);
-        return $attachment;
+        $attachmentInfo = $attachment->where('url', $params['url'])->where('user_id', $manageId)->find();
+        $params = array_filter($params);
+        if ($attachmentInfo) {
+            $attachmentInfo->save($params);
+        } else {
+            $attachmentInfo = Attachment::create($params, true);
+        }
+        
+        \think\Hook::listen("upload_after", $attachmentInfo);
+        return $attachmentInfo;
     }
 }

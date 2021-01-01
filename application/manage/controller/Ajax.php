@@ -4,7 +4,7 @@ namespace app\manage\controller;
 
 use app\common\controller\Manage;
 use app\common\exception\UploadException;
-use app\common\library\Upload;
+use app\manage\library\Upload;
 use think\addons\Service;
 use think\Cache;
 use think\Config;

@@ -3,6 +3,7 @@
 namespace app\manage\controller\site;
 
 use app\common\controller\Manage;
+use app\common\model\CustomInfo;
 use think\Db;
 use think\Exception;
 use think\exception\PDOException;
@@ -43,12 +44,24 @@ class Index extends Manage
             $result = array("total" => $list->total(), "rows" => $list->items());
 
             return json($result);
+        } else {
+            $customInfo = CustomInfo::getInfoByUserId($this->auth->id, ['is_edit']);
+            if (!$customInfo ||  $customInfo['is_edit'] == CustomInfo::EDIT_NO) {
+                $isEdit = CustomInfo::EDIT_NO;
+            } else {
+                $isEdit = CustomInfo::EDIT_YES;
+            }
+            $this->assign('isEdit', $isEdit);
         }
         return $this->view->fetch();
     }
 
     public function add()
     {
+        $customInfo = CustomInfo::getInfoByUserId($this->auth->id, ['is_edit']);
+        if (!$customInfo ||  $customInfo['is_edit'] == CustomInfo::EDIT_NO) {
+            $this->error('您不能编辑网站');
+        }
         if ($this->request->isPost()) {
             $params = $this->request->post("row/a");
             if ($params) {
@@ -81,6 +94,16 @@ class Index extends Manage
             $this->error(__('Parameter %s can not be empty', ''));
         }
         return $this->view->fetch();
+    }
+
+    public function edit($ids = null)
+    {
+        $customInfo = CustomInfo::getInfoByUserId($this->auth->id, ['is_edit']);
+        if (!$customInfo ||  $customInfo['is_edit'] == CustomInfo::EDIT_NO) {
+            $this->error('您不能编辑网站');
+        }
+
+        parent::edit($ids);
     }
 
     public function import()

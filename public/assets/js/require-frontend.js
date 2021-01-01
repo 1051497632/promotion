@@ -112,7 +112,8 @@ require.config({
         'bootstrap-select-lang': ['bootstrap-select'],
         'jstree': ['css!../libs/jstree/dist/themes/default/style.css'],
         'validator-lang': ['validator'],
-        'citypicker': ['citypicker-data', 'css!../libs/fastadmin-citypicker/dist/css/city-picker.css']
+        'citypicker': ['citypicker-data', 'css!../libs/fastadmin-citypicker/dist/css/city-picker.css'],
+        'layer': ['css!../libs/fastadmin-layer/dist/theme/default/layer.css', 'css!../libs/toastr/toastr.min.css']
     },
     baseUrl: requirejs.s.contexts._.config.config.site.cdnurl + '/assets/js/', //资源基础路径
     map: {

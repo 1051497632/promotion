@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta http-equiv="keywords" name="keyword" content="{$siteInfo.keyword}">
+
+        <title>{$siteInfo.title}</title>
+        <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
+
+        <!-- Bootstrap Core CSS -->
+        <link href="__CDN__/assets/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__CDN__/assets/css/index.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://cdn.staticfile.org/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script type="text/javascript">
+            var require = {
+                config: {$config|json_encode}
+            };
+        </script>
+
+        <style>
+            {if $isMobile}
+            /* 顶部样式 */
+            main {
+                padding-bottom: 70px;
+            }
+            .wechat-top {
+                position: fixed;
+                width: 100%;
+                height: 60px;
+                top: 0;
+                background: #fff;
+            }
+            .wechat-top .wechat-left {
+                float: left;
+                background: url("/assets/img/wechat_logo.png") no-repeat left center;
+                padding-left: 40px;
+                background-size: 30px 30px;
+                line-height: 60px;
+                margin-left: 15px;
+            }
+            .wechat-top .wechat-right {
+                animation: scale 4s linear infinite;
+                float: right;
+                margin: 10px 25px 0 0;
+                background: #1aad19;
+                color: #fff;
+                border-radius: 30px;
+                height: 40px;
+                line-height: 35px;
+                width: 90px;
+                text-align: center;
+            }
+            @keyframes scale {
+                0%{transform: scale(1)}
+                50%{transform: scale(1.1)}
+                100%{transform: scale(1)}
+            }
+            @-webkit-keyframes scale
+            {
+                0%{transform: scale(1)}
+                50%{transform: scale(1.1)}
+                100%{transform: scale(1)}
+            }
+            .wechat-top .wechat-right i {
+                font-style: normal;
+                font-size: 19px;
+            }
+
+            /* 底部样式 */
+            .bottom {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                display:flex;
+                -webkit-justify-content: space-around;
+                justify-content: space-around;
+                padding-bottom: 20px;
+            }
+            .bottom a {
+                width:48%;
+                padding: 10px 30px;
+                text-align: center;
+                background: #1ec79d;
+                border-radius: 5px;
+                color: #ffffff;
+            }
+
+            /* 弹窗样式 */
+            .mip-fill-content {
+                display: flex;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                min-width: 100%;
+                max-width: 100%;
+                height: 100%;
+                margin: auto;
+                    position: fixed;
+                z-index: 1000100;
+                top: 0px;
+                right: 0px;
+                left: 0px;
+                background: rgba(0,0,0, 0.5);
+                display: none;
+            }
+            .mip-fill-content .wechat-model-layer {
+                width: 33rem;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                padding: 1.25rem;
+                position: relative;
+                background: #fff;
+                border-radius: .8125rem;
+            }
+            .antman-wechat-modal-icon {
+                font-family: antman-wechat-modal-icon !important;
+                font-size: 16px;
+                font-style: normal;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            .mip-fill-content .wechat-model-layer .close {
+                position: absolute;
+                right: .9375rem;
+                top: 4px;
+                font-size: 26px;
+            }
+            .mip-fill-content .wechat-model-layer .wechat-model-success {
+                height: 100%;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                -webkit-flex-direction: column;
+                -ms-flex-direction: column;
+                flex-direction: column;
+            }
+            .mip-fill-content .wechat-model-layer .wechat-model-success .image .wechat_success_logo {
+                width: 3.75rem;
+                height: 3.75rem;
+            }
+            .mip-fill-content .wechat-model-layer .wechat-model-success .title {
+                color: #333;
+                font-size: 18px;
+                font-weight: 700;
+                margin: .4375rem 0 .625rem;
+            }
+            .mip-fill-content .wechat-model-layer .wechat-model-success .wechat-number {
+                color: #333;
+                font-size: 15px;
+            }
+            .mip-fill-content .wechat-model-layer .wechat-model-success .desc {
+                color: #333;
+                font-size: 15px;
+            }
+            .mip-fill-content .wechat-model-layer .wechat-model-success .button {
+                background-color: #1aad19;
+                border-radius: .25rem;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                margin-top: .9375rem;
+                padding: 10px 40px;
+            }
+            .mip-fill-content .wechat-model-layer .wechat-model-success .button span {
+                color: #fff;
+                font-size: .9375rem;
+            }
+            .mip-fill-content .wechat-model-layer .guide-img {
+                margin-top: 17px;
+            }
+            .mip-fill-content .wechat-model-layer .guide-img img {
+                width: 274px;
+                height: 155px;
+            }
+            {else}
+            ul li {
+                list-style: none;
+            }
+            .bottom-nav {
+                width: 100%;
+                height: 120px;
+                position: fixed;
+                bottom: 0px;
+                background-image: url('/assets/img/message-bg.png');
+                color: #ffffff;
+            }
+            .bottom {
+                position: relative;
+                width: 1000px;
+                margin: 0 auto;
+                padding: 10px 10px 0 10px;
+            }
+            .bottom .message-left, .bottom .message-form, .bottom .message-right {
+                display: inline-block;
+            }
+            .bottom .message-left {
+                width: 440px;
+                height: 120px;
+                background-image: url('/assets/img/message-left.png');
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+            .bottom .message-form {
+                position: relative;
+                top: -5px;
+            }
+            .bottom .message-form ul li {
+                margin-bottom: 10px;
+            }
+            .bottom .message-form ul li input {
+                width: 186px;
+                height: 35px;
+                line-height: 35px;
+                border: none;
+                padding: 0;
+                margin: 0;
+                text-indent: 5px;
+                color: #666;
+            }
+            .bottom .message-form .message-btn {
+                width: 85px;
+                height: 76px;
+                margin-top: 2px;
+                margin-left: 20px;
+            }
+            .bottom .message-form .send-message {
+                width: 100%;
+                height: 100%;
+                background-image: url('/assets/img/message-btn.png');
+                background-size: auto 92px;
+                background-position: -10px -9px;
+                border: 0px;
+                outline: none;
+                cursor: pointer;
+            }
+            .bottom .message-right {
+                width: 132px;
+                height: 41px;
+                background: url("{$siteInfo.custom_info.wechat_qrcode}") no-repeat center top;
+                background-size: auto 70px;
+                margin-top: 15px;
+                text-align: center;
+                color: #fff;
+                padding-top: 70px;
+                font-size: 12px;
+            }
+            .bottom .close-btn {
+                width: 36px;
+                height: 36px;
+                background: url("/assets/img/message-gb.png");
+                position: absolute;
+                right: -30px;
+                top: -10px;
+                cursor: pointer;
+            }
+            {/if}
+        </style>
+    </head>
+
+    <body id="page-top">
+        <main id="mainbody">
+            {if $isMobile}
+                <div class="wechat-top">
+                    <span class="wechat-left">添加微信好友了解详情</span>
+                    <span class="wechat-right">
+                        <i>+</i>
+                        关注
+                    </span>
+                </div>
+            {/if}
+            <div class="content">
+                {if $isMobile}
+                    {$siteInfo.mobile_content}
+                {else}
+                    {$siteInfo.pc_content}
+                {/if}
+            </div>
+        </main>
+        {if $isMobile}
+            <div class="flex bottom">
+                {if $siteInfo.mobile}
+                    <a href="tel:{$siteInfo.mobile}">
+                        <div>拨打电话</div>
+                    </a>
+                    <a href="sms:{$siteInfo.mobile}">
+                        <div>发送短信</div>
+                    </a>
+                {/if}
+            </div>
+
+            <div class="mip-fill-content" style="display: none;">
+                <div class="wechat-model-layer">
+                    <i on="click:wechat-lightbox42274734.close" class="antman-wechat-modal-icon iconguanbi close closeWechat">×</i> 
+                    <div class="wechat-model-success">
+                        <div class="image">
+                            <img src="/assets/img/wechat_success_icon.png" class="wechat_success_logo">
+                        </div> 
+                        <div class="title">复制成功</div> <!----> 
+                        <div class="wechat-number">微信号:  {$siteInfo.custom_info.wechat_number}</div>
+                        <div class="desc">添加微信好友, 详细了解详情</div>
+                        <div on="click:wechat-lightbox42274734.close" class="button openWechat">
+                            <span>打开微信</span>
+                        </div>
+                        <div class="guide-img">
+                            <img src="/assets/img/addweixin.gif">
+                        </div>
+                    </div> 
+                    <!---->
+                </div>
+
+                <!-- <input id="wechat" style="opacity: 0;height: 0;" value="{$siteInfo.custom_info.wechat_number}"> -->
+                <span id="wechat" style="opacity: 0;height: 0;">{$siteInfo.custom_info.wechat_number}</span>
+            </div>
+        {else}
+            <div class="bottom-nav">
+                <div class="bottom">
+                    <div class="close-btn"></div>
+                    <div class="message-left"></div>
+                    <div class="message-form">
+                        <ul class="pull-left">
+                            <li>
+                                <span>姓名：</span>
+                                <input class="c-username" name="username" type="text" placeholder="请输入您的姓名" >
+                            </li>
+                            <li>
+                                <span>手机：</span>
+                                <input class="c-phone" name="phone" type="text" placeholder="请输入您的手机" >
+                            </li>
+                        </ul>
+                        <div class="message-btn pull-left">
+                            <div class="send-message"></div>
+                        </div>
+                    </div>
+                    <div class="message-right pull-right">扫一扫更多惊喜</div>
+                </div>
+            </div>
+        {/if}
+        
+        {include file="common/script" /}
+    </body>
+
+    <script>
+        var id = "{$siteInfo.browse_log_id}";
+        var site_id = "{$siteInfo.id}";
+    </script>
+
+</html>

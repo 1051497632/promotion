@@ -8,6 +8,7 @@ use app\common\controller\Backend;
 use app\common\library\Auth;
 use app\common\model\CustomInfo as ModelCustomInfo;
 use app\manage\library\Auth as LibraryAuth;
+use fast\Random;
 use think\Db;
 use think\Exception;
 use think\exception\PDOException;
@@ -46,13 +47,13 @@ class User extends Backend
             if ($this->request->request('keyField')) {
                 return $this->selectpage();
             }
-            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['user.nickname', 'custominfo.company_name']);
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['user.nickname', 'user.mobile', 'custominfo.company_name']);
             $list = $this->model
                 ->with(['custominfo'])
                 ->where($where)
                 ->order($sort, $order)
                 ->paginate($limit);
-            foreach ($list as $k => $v) {
+            foreach ($list as $v) {
                 $v->avatar = $v->avatar ? cdnurl($v->avatar, true) : letter_avatar($v->nickname);
                 $v->hidden(['password', 'salt']);
             }
@@ -306,6 +307,10 @@ class User extends Backend
         
         $mamnageAuth = new LibraryAuth();
         $mamnageAuth->doLoginEvent($userInfo);
+        $userInfo->logintime = time();
+        $userInfo->loginip = request()->ip();
+        $userInfo->token = Random::uuid();
+        $userInfo->save();
 
         $this->success('登录成功！', '/manage/dashboard?ref=addtabs');
     }
