@@ -17,5 +17,8 @@ return [
     ],
     'user_delete_successed' => [
         ['app\\common\\behavior\\User', 'user_delete_successed']
+    ],
+    'sms_notice'     => [
+        ['app\\common\\behavior\\Sms', 'notice']
     ]
 ];

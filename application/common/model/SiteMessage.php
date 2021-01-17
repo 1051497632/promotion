@@ -23,4 +23,9 @@ class SiteMessage Extends Model
 
     const STATUS_WAIT       = 1; // 待处理
     const STATUS_SUCCESS    = 2; // 已处理
+
+    public function site()
+    {
+        return $this->belongsTo('Site', 'site_id', 'id', [], 'LEFT')->setEagerlyType(0);
+    }
 }

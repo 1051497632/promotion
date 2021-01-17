@@ -300,7 +300,7 @@
                         <i>+</i>关注
                     </span>
                 </div>
-
+                
                 <input id="wechat" style="opacity: 0;height: 0;" value="{$siteInfo.custom_info.wechat_number}" />
             {/if}
             <div class="content">
@@ -343,6 +343,8 @@
                     <!---->
                 </div>
             </div>
+
+            <div>联系客服</div>
         {else}
             <div class="bottom-nav">
                 <div class="bottom">
@@ -384,6 +386,14 @@
             selection.addRange(range);
             document.execCommand('copy');
         }
+        
+        (function() {
+            var _53code = document.createElement("script");
+            _53code.src = "https://tb.53kf.com/code/code/da4d1cfba7ad57adf0dc15031443df739/1";
+            var s = document.getElementsByTagName("script")[0]; 
+            console.log(s );
+            s.parentNode.insertBefore(_53code, s);}
+        )();
     </script>
 
 </html>

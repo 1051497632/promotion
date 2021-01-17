@@ -30,7 +30,7 @@ class User extends Validate
         'city_name'   => 'max:10',
         'area_name'   => 'max:10',
         'is_edit'   => 'number',
-        'promotion_time'   => 'date',
+        'promotion_time'   => 'max:50',
         'start_time'   => 'date',
         'end_time'   => 'date',
     ];

@@ -19,11 +19,7 @@ return [
         'test' => 'Test',
     ],
     'configgroup' => [
-        'basic' => 'Basic',
-        'email' => 'Email',
-        'dictionary' => 'Dictionary',
-        'user' => 'User',
-        'example' => 'Example',
+        'user' => '客户设置',
     ],
     'mail_type' => '1',
     'mail_smtp_host' => 'smtp.qq.com',
@@ -32,4 +28,6 @@ return [
     'mail_smtp_pass' => 'password',
     'mail_verify_type' => '2',
     'mail_from' => '10000@qq.com',
+    'customer_tel' => '13233221321',
+    'customer_qrcode' => '/assets/img/qrcode.png',
 ];

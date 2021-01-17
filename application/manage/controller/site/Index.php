@@ -103,7 +103,7 @@ class Index extends Manage
             $this->error('您不能编辑网站');
         }
 
-        parent::edit($ids);
+        return parent::edit($ids);
     }
 
     public function import()

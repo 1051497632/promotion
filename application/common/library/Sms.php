@@ -65,16 +65,16 @@ class Sms
      * 发送通知
      *
      * @param   mixed  $mobile   手机号,多个以,分隔
-     * @param   string $msg      消息内容
+     * @param   string $param    模板内容
      * @param   string $template 消息模板
      * @return  boolean
      */
-    public static function notice($mobile, $msg = '', $template = null)
+    public static function notice($mobile, $params = [], $template = null)
     {
         $params = [
-            'mobile'   => $mobile,
-            'msg'      => $msg,
-            'template' => $template
+            'mobile'    => $mobile,
+            'params'    => $params,
+            'template'  => $template
         ];
         $result = Hook::listen('sms_notice', $params, null, true);
         return $result ? true : false;

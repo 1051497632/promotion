@@ -49,6 +49,24 @@
         background: #86ba41 !important;
     }
 
+    .customer .customer-info {
+        padding: 10px;
+        width: 60px;
+        /* height: 60px; */
+        display: inline-block;
+        text-align: center;
+        font-size: 18px;
+        background: #b3c253;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        float: left;
+        margin-right: 10px;
+        color: #fff;
+        cursor: pointer;
+        line-height: 20px;
+    }
+
     .pink {
         background: #AC75F0 !important;
     }
@@ -64,23 +82,7 @@
         border-radius: 40px;
 
     }
-
-    .stat-info {
-        text-align: center;
-        background-color: #fff;
-        border-radius: 5px;
-        margin-top: -5px;
-        padding: 8px;
-        -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
-        box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
-        font-style: italic;
-    }
-
-    .stat-icon {
-        text-align: center;
-        margin-bottom: 5px;
-    }
-
+    
     .st-red {
         background-color: #F05050;
     }
@@ -96,73 +98,88 @@
     .st-blue {
         background-color: #23b7e5;
     }
-
-    .stats .stat-icon {
-        color: #28bb9c;
-        display: inline-block;
-        font-size: 26px;
-        text-align: center;
-        vertical-align: middle;
-        width: 50px;
-        float: left;
-    }
-
-    .stat {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: inline-block;
-    }
-
-    .stat .value {
+    
+    .panel .panel-heading .nav-tabs .title {
+        float: right;
+        margin-right: 40px;
+        color: red;
         font-size: 20px;
-        line-height: 24px;
-        overflow: hidden;
-        text-overflow: ellipsis;
         font-weight: 500;
     }
 
-    .stat .name {
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .panel-body .service .item {
+        margin-bottom: 20px;
     }
 
-    .stat.lg .value {
-        font-size: 26px;
-        line-height: 28px;
+    .panel-body .service .item .service-content {
+        background: #ffffff;
+        border-radius: 15px 15px 0 0;
+        border: 1px solid #AAB9FE;
     }
 
-    .stat.lg .name {
+    .panel-body .service .item .service-content .top {
+        width: 100%;
+        background: #1C83C6;
+        border-radius: 10px 10px 0 0;
+        color: #fff;
+        font-size: 20px;
+        padding: 10px 20px;
+    }
+
+    .panel-body .service .item .service-content .top .open, .panel-body .service .item .service-content .top .alread-open {
+        float: right;
+        cursor: pointer;
+        padding: 0 5px;
+        border-radius: 5px;
+        border: 1px solid #ffffff;
+    }
+
+    .panel-body .service .item .service-content .top .open {
+        
+    }
+
+    .panel-body .service .item .service-content .top .alread-open {
+    }
+
+    .panel-body .service .item .service-content .bottom {
+        padding: 10px 20px;
+    }
+
+    .panel-body .service .item .service-content .bottom ul {
+        margin: 0px;
+        padding: 0px;
         font-size: 16px;
     }
 
-    .stat-col .progress {
-        height: 2px;
+    .panel-body .service .item .service-content .bottom ul li {
+        list-style: none;
+        width: 100%;
+        padding: 5px 0;
+        border-bottom: 1px solid #99C8E4;
     }
 
-    .stat-col .progress-bar {
-        line-height: 2px;
-        height: 2px;
+    .panel-body .service .item .service-content .bottom ul li div {
+        display: inline-block;
     }
 
-    .item {
-        padding: 30px 0;
+    .panel-body .service .item .service-content .bottom ul li div:nth-child(2) {
+        float: right;
     }
 
-
-
-    #statistics .panel {
-        min-height: 150px;
+    .panel-body .service .item .service-content .bottom ul li.discount {
+        color: #AAB9FE;
     }
 
-    #statistics .panel h5 {
-        font-size: 13px;
+    .panel-body .service .item .service-content .bottom ul li.price {
+        color: #E6667F;
     }
+
 </style>
 <div class="panel panel-default panel-intro">
     <div class="panel-heading">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#one" data-toggle="tab">{:__('Dashboard')}</a></li>
+            <li class="title">全方位打造以效果为核心的营销平台--桔子网络</li>
         </ul>
     </div>
     <div class="panel-body">
@@ -187,6 +204,57 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="sm-st clearfix">
+                            <span class="sm-st-icon st-green"><i class="fa fa-eye"></i></span>
+                            <div class="sm-st-info">
+                                <span>{$siteclicknumber}</span>
+                                网站访问量
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="sm-st clearfix customer">
+                            <span class="sm-st-icon st-green customer-info">售后客服</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row service">
+                    {foreach name="serviceList" item="serviceItem"}
+                        <div class="col-sm-3 col-xs-6 item">
+                            <div class="clearfix service-content">
+                                <div class="top">
+                                    <span class="title">{$serviceItem.name}</span>
+                                    {if $serviceItem.wait_order_count <= 0}
+                                        <span class="open" data-id="{$serviceItem.id}">开通</span>
+                                    {else}
+                                        <span class="alread-open">已开通</span>
+                                    {/if}
+                                </div>
+                                <div class="bottom">
+                                    <ul>
+                                        <li>
+                                            <div>单品单价</div>
+                                            <div>￥{$serviceItem.price}</div>
+                                        </li>
+                                        <li class="discount">
+                                            <div>活动折扣</div>
+                                            <div>{$serviceItem.discount / 10}折</div>
+                                        </li>
+                                        <li class="price">
+                                            <div>实际单价</div>
+                                            <div>￥{:sprintf("%.2f", $serviceItem.price * ($serviceItem.discount / 100))}</div>
+                                        </li>
+                                        <li>
+                                            <div>服务时间</div>
+                                            <div>{$serviceItem.service_time}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {/foreach}
                 </div>
             </div>
             <div class="tab-pane fade" id="two">
@@ -199,3 +267,7 @@
         </div>
     </div>
 </div>
+
+<script>
+    var createOrderUrl = "{:url('create_order')}";
+</script>

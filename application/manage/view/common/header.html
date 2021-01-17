@@ -3,7 +3,7 @@
     <!-- 迷你模式下Logo的大小为50X50 -->
     <span class="logo-mini">{$site.name|mb_substr=0,4,'utf-8'|mb_strtoupper='utf-8'|htmlentities}</span>
     <!-- 普通模式下Logo -->
-    <span class="logo-lg">{$site.name|htmlentities}</span>
+    <span class="logo-lg" style="font-weight: 500;">尊敬的VIP客户您好！</span>
 </a>
 
 <!-- 顶部通栏样式 -->
@@ -36,7 +36,6 @@
                 <!-- 账号信息下拉框 -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{$admin.avatar|cdnurl|htmlentities}" class="user-image" alt="">
                         <span class="hidden-xs">{$admin.nickname|htmlentities}</span>
                     </a>
                     <ul class="dropdown-menu">

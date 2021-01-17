@@ -1,10 +1,10 @@
 <?php
 
-namespace app\admin\controller\site;
+namespace app\manage\controller\site;
 
-use app\common\controller\Backend;
+use app\common\controller\Manage;
 
-class Index extends Backend
+class Message extends Manage
 {
     
     protected $model = null;
@@ -12,7 +12,7 @@ class Index extends Backend
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = model('Site');
+        $this->model = model('SiteMessage');
     }
 
     public function index()
@@ -24,10 +24,11 @@ class Index extends Backend
             if ($this->request->request('keyField')) {
                 return $this->selectpage();
             }
-            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['user.nickname', 'site.title'], true);
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(['site_message.username', 'site_message.phone', 'site.title'], true);
 
             $list = $this->model
-                ->with(['user'])
+                ->with(['site'])
+                ->where('site.user_id', $this->auth->id)
                 ->where($where)
                 ->order($sort, $order)
                 ->paginate($limit);
@@ -41,14 +42,17 @@ class Index extends Backend
 
     public function add()
     {
-        $this->modelValidate = 'Site.add';
-        return parent::add();
+        $this->error('不能添加！');
     }
 
     public function edit($ids = '')
     {
-        $this->modelValidate = 'Site.edit';
-        return parent::edit($ids);
+        $this->error('不能修改！');
+    }
+
+    public function delete($ids = '')
+    {
+        $this->error('不能删除');
     }
 
     public function import()

@@ -52,7 +52,7 @@ return [
     'Is_edit'       => '是否可以编辑网站',
     'Edit_yes'      => '是',
     'Edit_no'       => '否',
-    'Promotion_time'    => '推广时间',
+    'Promotion_time'    => '签单销售',
     'Start_time'    => '上线时间',
     'End_time'      => '下线时间',
 ];

@@ -27,7 +27,8 @@
         "symfony/var-exporter": "^4.4.13",
         "ext-json": "*",
         "ext-curl": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "alibabacloud/client": "^1.5"
     },
     "config": {
         "preferred-install": "dist"

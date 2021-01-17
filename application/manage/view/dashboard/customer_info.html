@@ -1,0 +1,21 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">联系电话:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div style="margin-top: 6px;">
+                {$customer_tel}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">客服微信二维码:</label>
+        <div class="col-xs-12 col-sm-8" style="width: auto;">
+            <div style="margin-top: 8px;">
+                <a href="{$customer_qrcode}" data-url="{$customer_qrcode}" target="_blank" class="thumbnail">
+                    <img src="{$customer_qrcode}" onerror="this.src='/manage/ajax/icon?suffix=png';this.onerror=null;" class="img-responsive">
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

@@ -107,6 +107,31 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'table', 'echarts', 'echart
             //     }, 0);
             // });
 
+            $('.customer').click(function () {
+                Fast.api.open('dashboard/customer_info', '售后客服');
+            });
+
+            $('.open').click(function () {
+                var id = $(this).data('id');
+                Layer.confirm('确认要开通吗？', function (index) {
+                    Fast.api.ajax({
+                        url: createOrderUrl,
+                        method: 'POST',
+                        data: {id: id}
+                    }, function (data, ret) {
+                        if (ret.code == 1) {
+                            window.location.reload();
+                        }
+
+                        Layer.closeAll();
+                    }, function () {
+                        Layer.closeAll();
+                    });
+                });
+            });
+
+        },
+        customer_info: function () {
         }
     };
 

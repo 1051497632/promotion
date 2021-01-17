@@ -22,6 +22,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             var columns = [
                 {checkbox: true},
                 {field: 'id', title: __('Id')},
+                {field: 'site_id', title: __('Site_id'), visible: false, operate: false},
                 {field: 'title', title: __('Title'), operate: 'LIKE'},
                 {field: 'keyword', title: __('Keyword'), operate: 'LIKE'},
                 {field: 'mobile', title: __('Mobile'), operate: 'LIKE'},
@@ -39,6 +40,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         icon: 'fa fa-list',
                         classname: 'btn btn-info btn-xs btn-detail addtabsit',
                         url: 'site/browse_log/index?site_id={id}'
+                    },
+                    {
+                        name: 'detail',
+                        text: '查看消息',
+                        icon: 'fa fa-list',
+                        classname: 'btn btn-info btn-xs btn-detail addtabsit',
+                        url: 'site/message/index?site_id={id}'
                     }
                 ]});
             }

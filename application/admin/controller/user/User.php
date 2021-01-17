@@ -6,7 +6,9 @@ use app\admin\validate\CustomInfo;
 use app\admin\validate\User as ValidateUser;
 use app\common\controller\Backend;
 use app\common\library\Auth;
+use app\common\library\Sms;
 use app\common\model\CustomInfo as ModelCustomInfo;
+use app\common\model\Sms as ModelSms;
 use app\manage\library\Auth as LibraryAuth;
 use fast\Random;
 use think\Db;
@@ -54,6 +56,9 @@ class User extends Backend
                 ->order($sort, $order)
                 ->paginate($limit);
             foreach ($list as $v) {
+                $day = ceil(($v->custominfo->end_time - $v->custominfo->start_time) / 86400);
+                $day = $day > 0 ? $day : 0;
+                $v['day'] = $day . '天';
                 $v->avatar = $v->avatar ? cdnurl($v->avatar, true) : letter_avatar($v->nickname);
                 $v->hidden(['password', 'salt']);
             }
@@ -91,12 +96,7 @@ class User extends Backend
                 if (!$validate->check($custom_info, [], 'add')) {
                     $this->error($validate->getError());
                 }
-
-                if ($custom_info['promotion_time']) {
-                    $custom_info['promotion_time'] = strtotime($custom_info['promotion_time']);
-                } else {
-                    $custom_info['promotion_time'] = 0;
-                }
+                
                 if ($custom_info['start_time']) {
                     $custom_info['start_time'] = strtotime($custom_info['start_time']);
                 } else {
@@ -139,6 +139,11 @@ class User extends Backend
                     $this->error($e->getMessage());
                 }
                 if ($result !== false) {
+                    // 发送短信消息TODO: 短信模板开能后显示
+                    /* Sms::notice($params['mobile'], [
+                        'tel'       => $params['mobile'],
+                        'password'  => $params['password'],
+                    ], 'SMS_209550746'); */
                     $this->success();
                 } else {
                     $this->error(__('No rows were inserted'));
@@ -182,11 +187,6 @@ class User extends Backend
                     $this->error($validate->getError());
                 }
 
-                if ($custom_info['promotion_time']) {
-                    $custom_info['promotion_time'] = strtotime($custom_info['promotion_time']);
-                } else {
-                    $custom_info['promotion_time'] = 0;
-                }
                 if ($custom_info['start_time']) {
                     $custom_info['start_time'] = strtotime($custom_info['start_time']);
                 } else {
@@ -245,11 +245,6 @@ class User extends Backend
             $this->view->assign("row", $row);
             $customInfo = ModelCustomInfo::getInfoByUserId($row['id']);
             if ($customInfo) {
-                if ($customInfo['promotion_time'] > 0) {
-                    $customInfo['promotion_time'] = date('Y-m-d H:i:s', $customInfo['promotion_time']);
-                } else {
-                    $customInfo['promotion_time'] = '';
-                }
                 if ($customInfo['start_time'] > 0) {
                     $customInfo['start_time'] = date('Y-m-d H:i:s', $customInfo['start_time']);
                 } else {
