@@ -30,25 +30,22 @@ class Sms
                             'PhoneNumbers'  => $params['mobile'],
                             'SignName'      => config('sms.signName'),
                             'TemplateCode'  => $params['template'],
-                            'TemplateParam' => $params['params'],
+                            'TemplateParam' => is_array($params['params']) ? json_encode($params['params']) : $params['params'],
                         ]
                     ])
                     ->request();
             if ($result['Code'] != 'OK') {
                 Log::write('Sms send error:', Log::ERROR);
-                Log::write($result, Log::ERROR);
+                Log::write($result['Message'], Log::ERROR);
                 return false;
             }
         } catch (ClientException $e) {
-            echo $e->getMessage();exit;
             Log::write('Sms send ClientException:' . $e->getErrorMessage(), Log::ERROR);
             return false;
         } catch (ServerException $e) {
-            echo $e->getMessage();exit;
             Log::write('Sms send ServerException:' . $e->getErrorMessage(), Log::ERROR);
             return false;
         } catch (Exception $e) {
-            echo $e->getMessage();exit;
             Log::write('Sms send Exception:' . $e->getMessage(), Log::ERROR);
             return false;
         }

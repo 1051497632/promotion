@@ -8,7 +8,6 @@ use app\common\controller\Backend;
 use app\common\library\Auth;
 use app\common\library\Sms;
 use app\common\model\CustomInfo as ModelCustomInfo;
-use app\common\model\Sms as ModelSms;
 use app\manage\library\Auth as LibraryAuth;
 use fast\Random;
 use think\Db;
@@ -140,10 +139,10 @@ class User extends Backend
                 }
                 if ($result !== false) {
                     // 发送短信消息TODO: 短信模板开能后显示
-                    /* Sms::notice($params['mobile'], [
+                    Sms::notice($params['mobile'], [
                         'tel'       => $params['mobile'],
-                        'password'  => $params['password'],
-                    ], 'SMS_209550746'); */
+                        'password'  => !empty($params['password']) ? $params['password'] : '未设置',
+                    ], 'SMS_209550746');
                     $this->success();
                 } else {
                     $this->error(__('No rows were inserted'));
@@ -153,7 +152,7 @@ class User extends Backend
         }
         return $this->view->fetch();
     }
-
+    
     /**
      * 编辑
      */
