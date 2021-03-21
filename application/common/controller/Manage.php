@@ -492,7 +492,7 @@ class Manage extends Controller
             };
         }
         $list = [];
-        $total = $this->model->where($where)->count();
+        $total = $this->model->where($where)->where('user_id', $this->auth->id)->count();
         if ($total > 0) {
             $fields = is_array($this->selectpageFields) ? $this->selectpageFields : ($this->selectpageFields && $this->selectpageFields != '*' ? explode(',', $this->selectpageFields) : []);
 
@@ -507,6 +507,7 @@ class Manage extends Controller
             }
 
             $datalist = $this->model->where($where)
+                ->where('user_id', $this->auth->id)
                 ->page($page, $pagesize)
                 ->select();
 

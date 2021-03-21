@@ -247,11 +247,28 @@ if (!function_exists('build_selectpage')) {
     }
 }
 
+// 动态下拉列表组件(多选)
+if (!function_exists('build_selectpages')) {
+    function build_selectpages(string $name, string $value, string $url, string $field = null, string $primaryKey = null, array $options = []) {
+        $options = is_array($options) ? $options : explode(',', $options);
+        return Form::selectpages($name, $value, $url, $field, $primaryKey, $options);
+    }
+}
+
 // 图片上传
 if (!function_exists('build_image')) {
     function build_image(string $name = null, string $value, array $inputAttr = [], array $uploadAttr = [], array $chooseAttr = [], array $previewAttr = []) {
         $defaultChooseAttr = ['class' => 'btn btn-primary fachoose'];
         $chooseAttr = array_merge($defaultChooseAttr, $chooseAttr);
         return Form::image($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
+    }
+}
+
+// 多图上传
+if (!function_exists('build_images')) {
+    function build_images(string $name = null, string $value, array $inputAttr = [], array $uploadAttr = [], array $chooseAttr = [], array $previewAttr = []) {
+        $defaultChooseAttr = ['class' => 'btn btn-primary fachoose'];
+        $chooseAttr = array_merge($defaultChooseAttr, $chooseAttr);
+        return Form::images($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
     }
 }

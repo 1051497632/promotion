@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="{$siteInfo.keyword}">
+        <meta name="author" content="">
+        <meta http-equiv="keywords" name="keyword" content="{$siteInfo.keyword}">
+
+        <title>{$siteInfo.title}</title>
+        <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
+
+        <!-- Bootstrap Core CSS -->
+        <link href="__CDN__/assets/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="__CDN__/assets/css/index.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://cdn.staticfile.org/html5shiv/3.7.3/html5shiv.min.js"></script>
+            <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script type="text/javascript">
+            var require = {
+                config: {$config|json_encode}
+            };
+            
+            var site_id = "{$siteInfo.id}";
+        </script>
+
+        {include file="common/script" /}
+
+        <style>
+            ul li {
+                list-style: none;
+            }
+
+            .top .welcome {
+                padding: 10px 0;
+                padding-left: 100px;
+                border-bottom: 1px solid #F0F0F0;
+            }
+
+            .top .content {
+                padding-left: 100px;
+            }
+
+            .top .content .left {
+                margin: 10px 0;
+            }
+            
+            .top .content .left, .top .content .right {
+                display: inline-block;
+            }
+            
+            .top .content .left .logo {
+                width: 100px;
+                height: 50px;
+                vertical-align: text-bottom;
+            }
+
+            .top .content .left .logo img {
+                width: 100%;
+                height: 100%;
+            }
+
+            .top .content .left .logo, .top .content .left .text {
+                display: inline-block;
+            }
+
+            .top .content .left .text {
+                margin-left: 10px;
+                margin-bottom: 5px;
+            }
+
+            .top .content .left .text .title {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 3px;
+            }
+
+            .top .content .right {
+                float: right;
+                margin-right: 200px;
+            }
+
+            .top .content .right ul li {
+                list-style: none;
+                float: left;
+                width: 70px;
+                height: 70px;
+                background: #1C83C6;
+                margin-left: 5px;
+                text-align: center;
+                line-height: 70px;
+            }
+
+            .top .content .right .wechat-qrcode img {
+                width: 100%;
+            }
+
+            .top-line {
+                width: 100%;
+                height: 25px;
+                background: #ED5564;
+            }
+            
+            .page-content {
+                padding: 0 100px ;
+                background-color: #F7F7F7;
+            }
+
+            .page-content .banner {
+                width: 100%;
+                height: auto;
+                
+            }
+            
+            .page-content .banner img {
+                width: 100%;
+                height: 100%;
+            }
+
+            .page-content .recommend-goods .title, .page-content .other-goods .title {
+                font-size: 20px;
+                font-weight: bold;
+                margin: 10px 0;
+            }
+
+            .page-content .recommend-goods .goods, .page-content .other-goods .goods {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                text-decoration: none;
+            }
+
+            .page-content .recommend-goods .goods .item, .page-content .other-goods .goods .item {
+                width: 19%;
+                margin-bottom: 20px;
+            }
+
+            .page-content .recommend-goods .goods .item img, .page-content .other-goods .goods .item img {
+                width: 100%;
+            }
+
+            .page-content .recommend-goods .goods .item .goods-title, .page-content .other-goods .goods .item .goods-title {
+                font-size: 20px;
+            }
+
+            .page-content .recommend-goods .goods .item .goods-price, .page-content .other-goods .goods .item .goods-price {
+                color: red;
+                font-size: 22px;
+                font-weight: bold;
+            }
+
+            .page-content .about-us {
+                margin: 20px 0;
+            }
+
+            .page-content .site-label {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                margin-bottom: 20px;
+            }
+
+            .page-content .site-label .item {
+                padding: 10px 40px;
+                background-color: #FFFFFF;
+                float: left;
+                margin-bottom: 10px;
+                border-radius: 10px;
+            }
+
+            .page-content .contact-consultation ul li {
+                display: inline-block;
+            }
+
+            .page-content .contact-consultation .title {
+                margin: 10px 0;
+            }
+
+            .page-content .contact-consultation .consultation-content {
+                background-color: #ffffff;
+                padding: 80px 0 40px 10px;
+            }
+
+            .page-content .contact-consultation .consultation-content .consultation-left {
+                width: 200px;
+            }
+
+            .page-content .contact-consultation .consultation-content .consultation-left img {
+                width: 100%;
+            }
+
+            .page-content .contact-consultation .consultation-content .consultation-center {
+                padding: 0 20px 0 10px;
+                margin-top: 10px;
+                padding-left: 10px;
+            }
+            
+            .page-content .contact-consultation .consultation-content .consultation-center .online-time-title {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .page-content .contact-consultation .consultation-content .consultation-center .online-time-content {
+                font-size: 20px;
+                font-weight: bold;
+                margin-top: 5px;
+            }
+
+            .page-content .contact-consultation .consultation-content .consultation-right {
+                float: right;
+                margin-right: 50px;
+                width: 300px;
+            }
+
+            .page-content .contact-consultation .consultation-content .consultation-right .consultation-form input {
+                width: 100%;
+                padding: 10px 20px;
+                border-radius: 10px;
+                background-color: #F7F7F7;
+                border: none;
+            }
+
+            .page-content .contact-consultation .consultation-content .consultation-right .consultation-call {
+                margin-top: 20px;
+                background-color: #EF4C4F;
+                width: 100%;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 10px;
+                font-size: 16px;
+                color: #ffffff;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>
+            <!-- 头部 -->
+            <div class="top">
+                <div class="welcome">
+                    你好，欢迎光临！现在是{:date('Y年m月d日 H:i:s')}
+                </div>
+                <div class="content">
+                    <div class="left">
+                        <div class="logo">
+                            <img src="{$siteInfo.logo}" />
+                        </div>
+                        <div class="text">
+                            <div class="title">标题：{$siteInfo.title}</div>
+                            <div class="desc">简述:{$siteInfo.desc}</div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <ul>
+                            <li class="phone">{$siteInfo.mobile}</li>
+                            <li class="wechat-qrcode">
+                                <img src="{$siteInfo.qrcode_image}" />
+                            </li>
+                            <!-- <li class="statistics">统计</li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="top-line"></div>
+            <!-- 中间 -->
+            <div class="page-content">
+                <div class="banner">
+                    <img src="{$siteInfo.banner_images}" />
+                </div>
+                {if !empty($siteInfo.recommend_goods)}
+                    <div class="recommend-goods">
+                        <div class="title">推荐产品</div>
+                        <div class="goods">
+                            {foreach name="siteInfo.recommend_goods" item="vo"}
+                                <div class="item">
+                                    <div class="goods-image">
+                                        <img src="/uploads/20210101/6656bf1f031995e9d16d8ff090923505.png" />
+                                    </div>
+                                    <div class="goods-title">
+                                        test
+                                    </div>
+                                    <div class="goods-price">
+                                        ￥500元
+                                    </div>
+                                </div>
+                            {/foreach}
+                        </div>
+                    </div>
+                {/if}
+                {if $siteInfo.about_us}
+                    <div class="about-us">{$siteInfo.about_us}</div>
+                {/if}
+                {if !empty($siteInfo['labels'])}
+                <div class="site-label">
+                    {foreach name="siteInfo.labels" item="vo"}
+                        <div class="item">{$vo.name}</div>
+                    {/foreach}
+                </div>
+                {/if}
+                {if !empty($siteInfo.other_goods)}
+                    <div class="other-goods">
+                        <div class="goods">
+                            {foreach name="siteInfo.other_goods" item="vo"}
+                            <div class="item">
+                                <div class="goods-image">
+                                    <img src="{$vo.image}" />
+                                </div>
+                                <div class="goods-title">
+                                    {$vo.name}
+                                </div>
+                                <div class="goods-price">
+                                    ￥{$vo.price}元
+                                </div>
+                            </div>
+                            {/foreach}
+                        </div>
+                    </div>
+                {/if}
+                <div class="contact-consultation">
+                    <div class="title">联系咨询</div>
+                    <ul class="consultation-content">
+                        <li class="consultation-left">
+                            <img src="/uploads/20210101/6656bf1f031995e9d16d8ff090923505.png" />
+                        </li>
+                        <li class="consultation-center">
+                            <div class="online-time-title">在线时间：</div>
+                            <div class="online-time-content">{:date('H:i', $siteInfo.online_start_time)}-{:date('H:i', $siteInfo.online_end_time)}</div>
+                        </li>
+                        <li class="consultation-right">
+                            <div class="consultation-form">
+                                <input name="phone" class="c-phone" value="" placeholder="填写您的电话1分钟后内给您回电！" />
+                            </div>
+                            <button class="consultation-call">直接拨打</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

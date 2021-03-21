@@ -52,6 +52,7 @@ trait Backend
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
 
             $list = $this->model
+                ->where('user_id', $this->auth->id)
                 ->where($where)
                 ->order($sort, $order)
                 ->paginate($limit);
@@ -75,6 +76,7 @@ trait Backend
 
             $list = $this->model
                 ->onlyTrashed()
+                ->where('user_id', $this->auth->id)
                 ->where($where)
                 ->order($sort, $order)
                 ->paginate($limit);
@@ -95,6 +97,8 @@ trait Backend
             $params = $this->request->post("row/a");
             if ($params) {
                 $params = $this->preExcludeFields($params);
+
+                $params['user_id'] = $this->auth->id;
 
                 if ($this->dataLimit && $this->dataLimitFieldAutoFill) {
                     $params[$this->dataLimitField] = $this->auth->id;
@@ -137,7 +141,7 @@ trait Backend
     public function edit($ids = null)
     {
         $row = $this->model->get($ids);
-        if (!$row) {
+        if (!$row || $row['user_id'] != $this->auth->id) {
             $this->error(__('No Results were found'));
         }
         if ($this->request->isPost()) {
@@ -188,7 +192,7 @@ trait Backend
         $ids = $ids ? $ids : $this->request->post("ids");
         if ($ids) {
             $pk = $this->model->getPk();
-            $list = $this->model->where($pk, 'in', $ids)->select();
+            $list = $this->model->where($pk, 'in', $ids)->where('user_id', $this->auth->id)->select();
 
             $count = 0;
             Db::startTrans();
@@ -226,6 +230,9 @@ trait Backend
         if ($ids) {
             $this->model->where($pk, 'in', $ids);
         }
+
+        $this->model->where('user_id', $this->auth->id);
+
         $count = 0;
         Db::startTrans();
         try {
@@ -262,6 +269,9 @@ trait Backend
         if ($ids) {
             $this->model->where($pk, 'in', $ids);
         }
+
+        $this->model->where('user_id', $this->auth->id);
+
         $count = 0;
         Db::startTrans();
         try {
@@ -300,7 +310,7 @@ trait Backend
                     $count = 0;
                     Db::startTrans();
                     try {
-                        $list = $this->model->where($this->model->getPk(), 'in', $ids)->select();
+                        $list = $this->model->where($this->model->getPk(), 'in', $ids)->where('user_id', $this->auth->id)->select();
                         foreach ($list as $index => $item) {
                             $count += $item->allowField(true)->isUpdate(true)->save($values);
                         }
@@ -417,6 +427,7 @@ trait Backend
                     }
                 }
                 if ($row) {
+                    $row['user_id'] = $this->auth->id;
                     $insert[] = $row;
                 }
             }

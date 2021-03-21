@@ -25,6 +25,8 @@
                 config: {$config|json_encode}
             };
         </script>
+        
+        {include file="common/script" /}
 
         <style>
             {if $isMobile}
@@ -369,8 +371,6 @@
                 </div>
             </div>
         {/if}
-        
-        {include file="common/script" /}
     </body>
 
     <script>
