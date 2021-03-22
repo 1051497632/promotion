@@ -13,7 +13,7 @@ class ShopSite extends Validate
         'user_id'       => 'require|number|gt:0',
         'title'         => 'require|max:255',
         'keyword'       => 'require|max:255',
-        'desc'          => 'require|max:11',
+        'desc'          => 'max:11',
         'logo'          => 'require|max:255',
         'banner_images' => 'require|max:1000',
         'about_us'      => 'max:3000',

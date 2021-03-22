@@ -37,25 +37,28 @@
 
             .top .welcome {
                 padding: 10px 0;
-                padding-left: 100px;
+                padding-right: 200px;
                 border-bottom: 1px solid #F0F0F0;
+                text-align: right;
             }
 
             .top .content {
-                padding-left: 100px;
-            }
-
-            .top .content .left {
-                margin: 10px 0;
+                padding-left: 200px;
             }
             
             .top .content .left, .top .content .right {
                 display: inline-block;
             }
+
+            .top .content .left {
+                display: flex;
+                align-items: center;
+                margin: 10px 0;
+            }
             
             .top .content .left .logo {
-                width: 100px;
-                height: 50px;
+                width: 120px;
+                height: 60px;
                 vertical-align: text-bottom;
             }
 
@@ -70,7 +73,6 @@
 
             .top .content .left .text {
                 margin-left: 10px;
-                margin-bottom: 5px;
             }
 
             .top .content .left .text .title {
@@ -106,7 +108,7 @@
             }
             
             .page-content {
-                padding: 0 100px ;
+                padding: 0 200px ;
                 background-color: #F7F7F7;
             }
 
@@ -119,6 +121,10 @@
             .page-content .banner img {
                 width: 100%;
                 height: 100%;
+            }
+
+            .page-content .recommend-goods .title, .page-content .other-goods {
+                margin: 40px 0;
             }
 
             .page-content .recommend-goods .title, .page-content .other-goods .title {
@@ -154,22 +160,35 @@
             }
 
             .page-content .about-us {
-                margin: 20px 0;
+                margin: 40px 0;
+            }
+
+            .page-content .about-us ul {
+                padding: 0;
+                margin: 0;
+            }
+
+            .page-content .about-us .title {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 10px;
             }
 
             .page-content .site-label {
-                display: flex;
+                /* display: flex;
                 justify-content: space-between;
-                flex-wrap: wrap;
-                margin-bottom: 20px;
+                flex-wrap: wrap; */
+                margin: 20px 0;
+                width: calc(100% + 10px);
             }
 
             .page-content .site-label .item {
                 padding: 10px 40px;
                 background-color: #FFFFFF;
-                float: left;
                 margin-bottom: 10px;
                 border-radius: 10px;
+                display: inline-block;
+                margin-right: 10px;
             }
 
             .page-content .contact-consultation ul li {
@@ -178,6 +197,8 @@
 
             .page-content .contact-consultation .title {
                 margin: 10px 0;
+                font-size: 20px;
+                font-weight: bold;
             }
 
             .page-content .contact-consultation .consultation-content {
@@ -251,18 +272,16 @@
                         </div>
                         <div class="text">
                             <div class="title">标题：{$siteInfo.title}</div>
-                            <div class="desc">简述:{$siteInfo.desc}</div>
                         </div>
                     </div>
-                    <div class="right">
+                    <!-- <div class="right">
                         <ul>
                             <li class="phone">{$siteInfo.mobile}</li>
                             <li class="wechat-qrcode">
                                 <img src="{$siteInfo.qrcode_image}" />
                             </li>
-                            <!-- <li class="statistics">统计</li> -->
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="top-line"></div>
@@ -278,7 +297,7 @@
                             {foreach name="siteInfo.recommend_goods" item="vo"}
                                 <div class="item">
                                     <div class="goods-image">
-                                        <img src="/uploads/20210101/6656bf1f031995e9d16d8ff090923505.png" />
+                                        <img src="{$vo.image}" />
                                     </div>
                                     <div class="goods-title">
                                         test
@@ -292,7 +311,10 @@
                     </div>
                 {/if}
                 {if $siteInfo.about_us}
-                    <div class="about-us">{$siteInfo.about_us}</div>
+                    <div class="about-us">
+                        <div class="title">简介描述</div>
+                        <div class="content">{$siteInfo.about_us}</div>
+                    </div>
                 {/if}
                 {if !empty($siteInfo['labels'])}
                 <div class="site-label">

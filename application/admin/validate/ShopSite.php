@@ -1,6 +1,6 @@
 <?php
 
-namespace app\manage\validate;
+namespace app\admin\validate;
 
 use think\Validate;
 
@@ -13,7 +13,7 @@ class ShopSite extends Validate
         'user_id'       => 'require|number|gt:0',
         'title'         => 'require|max:255',
         'keyword'       => 'require|max:255',
-        'desc'          => 'require|max:11',
+        'desc'          => 'max:11',
         'logo'          => 'require|max:255',
         'banner_images' => 'require|max:1000',
         'about_us'      => 'max:3000',
@@ -34,7 +34,7 @@ class ShopSite extends Validate
      */
     protected $scene = [
         'add'  => ['user_id', 'title', 'keyword', 'desc', 'logo', 'banner_images', 'about_us', 'mobile', 'qrcode_image', 'online_start_time', 'online_end_time', 'page_show'],
-        'edit' => ['user_id', 'title', 'keyword', 'desc', 'logo', 'banner_images', 'about_us', 'mobile', 'qrcode_image', 'online_start_time', 'online_end_time', 'page_show'],
+        'edit' => ['title', 'keyword', 'desc', 'logo', 'banner_images', 'about_us', 'mobile', 'qrcode_image', 'online_start_time', 'online_end_time', 'page_show'],
     ];
 
     public function __construct(array $rules = [], $message = [], $field = [])
