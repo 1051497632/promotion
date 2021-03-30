@@ -34,7 +34,7 @@ class ShopSite extends Validate
      */
     protected $scene = [
         'add'  => ['user_id', 'title', 'keyword', 'desc', 'logo', 'banner_images', 'about_us', 'mobile', 'qrcode_image', 'online_start_time', 'online_end_time', 'page_show'],
-        'edit' => ['user_id', 'title', 'keyword', 'desc', 'logo', 'banner_images', 'about_us', 'mobile', 'qrcode_image', 'online_start_time', 'online_end_time', 'page_show'],
+        'edit' => ['title', 'keyword', 'desc', 'logo', 'banner_images', 'about_us', 'mobile', 'qrcode_image', 'online_start_time', 'online_end_time', 'page_show'],
     ];
 
     public function __construct(array $rules = [], $message = [], $field = [])

@@ -3,10 +3,12 @@
 namespace app\index\controller;
 
 use app\common\controller\Frontend;
+use app\common\library\Sms;
 use app\common\model\ShopSite as ModelShopSite;
 use app\common\model\ShopSiteGoods;
 use app\common\model\ShopSiteMessage;
 use think\Db;
+use think\Hook;
 
 class ShopSite extends Frontend
 {
@@ -37,10 +39,13 @@ class ShopSite extends Frontend
         if (!empty($siteInfo['label_id'])) {
             $siteInfo['labels'] = model('ShopSiteLabel')->where('id', 'IN', $siteInfo['label_id'])->order(Db::raw('FIELD(id,' . $siteInfo['label_id'] . ')'))->select();
         }
-
-        $this->assign('isMobile', $this->request->isMobile());
         $this->assign('siteInfo', $siteInfo);
-        return $this->view->fetch();
+
+        if ($this->request->isMobile()) {
+            return $this->view->fetch('mobile_index');
+        } else {
+            return $this->view->fetch();
+        }
     }
 
     // 发送留言
@@ -58,12 +63,14 @@ class ShopSite extends Frontend
         if (!$siteInfo) {
             $this->error('网站不存在!');
         }
-
-        ShopSiteMessage::create([
+        
+        $shopSiteMessage = ShopSiteMessage::create([
             'shop_site_id'  => $shopSiteId,
             'phone'         => $phone,
             'status'        => ShopSiteMessage::STATUS_WAIT,
         ]);
+
+        // Hook::listen('shop_site_message_add_success', $shopSiteMessage, $siteInfo, true);
 
         $this->success('发送成功');
     }

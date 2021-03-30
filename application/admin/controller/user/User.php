@@ -138,7 +138,7 @@ class User extends Backend
                     $this->error($e->getMessage());
                 }
                 if ($result !== false) {
-                    // 发送短信消息TODO: 短信模板开能后显示
+                    // 发送短信消息T
                     Sms::notice($params['mobile'], [
                         'tel'       => $params['mobile'],
                         'password'  => !empty($params['password']) ? $params['password'] : '未设置',

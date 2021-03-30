@@ -23,12 +23,14 @@ class ShopSite extends Validate
         'online_end_time'   => 'require|date',
         'show_page'         => 'require|number',
     ];
+
     /**
      * 提示消息
      */
     protected $message = [
         'user_id.gt'    => '客户不能为空'
     ];
+    
     /**
      * 验证场景
      */

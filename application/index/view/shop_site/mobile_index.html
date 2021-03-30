@@ -40,15 +40,14 @@
             list-style: none;
         }
         
-        .top .welcome {
-            padding: 10px 0;
-            padding-right: 200px;
-            border-bottom: 1px solid #F0F0F0;
-            text-align: right;
+        .top {
+            padding: 0 10px;
         }
         
-        .top .content {
-            padding-left: 200px;
+        .top .welcome {
+            padding: 10px 0;
+            border-bottom: 1px solid #F0F0F0;
+            text-align: right;
         }
         
         .top .content .left,
@@ -115,7 +114,6 @@
         }
         
         .page-content {
-            padding: 0 200px;
             background-color: #F7F7F7;
         }
         
@@ -131,7 +129,7 @@
         
         .page-content .recommend-goods .title,
         .page-content .other-goods {
-            margin: 10px 0;
+            margin: 20px 0;
         }
         
         .page-content .recommend-goods .title,
@@ -139,6 +137,7 @@
             font-size: 20px;
             font-weight: bold;
             margin: 10px 0;
+            padding-left: 10px;
         }
         
         .page-content .recommend-goods .goods,
@@ -147,12 +146,19 @@
             justify-content: space-between;
             flex-wrap: wrap;
             text-decoration: none;
+            padding: 0 10px;
         }
         
         .page-content .recommend-goods .goods .item,
         .page-content .other-goods .goods .item {
-            width: 19%;
+            width: 48%;
             margin-bottom: 20px;
+        }
+        
+        .page-content .recommend-goods .goods .item .goods-image,
+        .page-content .other-goods .goods .item .goods-image {
+            border-radius: 5px;
+            overflow: hidden;
         }
         
         .page-content .recommend-goods .goods .item img,
@@ -173,7 +179,11 @@
         }
         
         .page-content .about-us {
-            margin: 40px 0;
+            margin: 20px 0;
+        }
+        
+        .page-content .about-us .content {
+            padding: 0 20px;
         }
         
         .page-content .about-us ul {
@@ -185,14 +195,13 @@
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 10px;
+            padding-left: 10px;
         }
         
         .page-content .site-label {
-            /* display: flex;
-                justify-content: space-between;
-                flex-wrap: wrap; */
-            margin: 20px 0;
+            margin: 10px 0;
             width: calc(100% + 10px);
+            padding: 0 10px;
         }
         
         .page-content .site-label .item {
@@ -212,15 +221,16 @@
             margin: 10px 0;
             font-size: 20px;
             font-weight: bold;
+            padding-left: 10px;
         }
         
         .page-content .contact-consultation .consultation-content {
             background-color: #ffffff;
-            padding: 20px 0 20px 10px;
+            padding: 20px 0 20px 0;
         }
         
         .page-content .contact-consultation .consultation-content .consultation-left {
-            width: 200px;
+            width: 100px;
         }
         
         .page-content .contact-consultation .consultation-content .consultation-left img {
@@ -244,14 +254,12 @@
             margin-top: 5px;
         }
         
-        .page-content .contact-consultation .consultation-content .consultation-right {
-            float: right;
-            margin-right: 50px;
-            margin-top: 45px;
-            width: 300px;
+        .page-content .contact-consultation .consultation-form-bottom {
+            width: 100%;
+            padding: 0 50px;
         }
         
-        .page-content .contact-consultation .consultation-content .consultation-right .consultation-form input {
+        .page-content .contact-consultation .consultation-form-bottom input {
             width: 100%;
             padding: 10px 20px;
             border-radius: 10px;
@@ -259,7 +267,7 @@
             border: none;
         }
         
-        .page-content .contact-consultation .consultation-content .consultation-right .consultation-call {
+        .page-content .contact-consultation .consultation-form-bottom .consultation-call {
             margin-top: 20px;
             background-color: #EF4C4F;
             width: 100%;
@@ -355,24 +363,37 @@
             {/if}
             <div class="contact-consultation">
                 <div class="title">联系咨询</div>
-                <ul class="consultation-content">
-                    <li class="consultation-left">
-                        <img src="/assets/img/contact_customer.jpg" />
-                    </li>
-                    <li class="consultation-center">
-                        <div class="online-time-title">在线时间：</div>
-                        <div class="online-time-content">{:date('H:i', $siteInfo.online_start_time)}-{:date('H:i', $siteInfo.online_end_time)}</div>
-                    </li>
-                    <li class="consultation-right">
+                <div class="consultation-content">
+                    <ul>
+                        <li class="consultation-left">
+                            <img src="/assets/img/contact_customer.jpg" />
+                        </li>
+                        <li class="consultation-center">
+                            <div class="online-time-title">在线时间：</div>
+                            <div class="online-time-content">{:date('H:i', $siteInfo.online_start_time)}-{:date('H:i', $siteInfo.online_end_time)}</div>
+                        </li>
+                    </ul>
+
+                    <div class="consultation-form-bottom">
                         <div class="consultation-form">
                             <input name="phone" class="c-phone" value="" placeholder="填写您的电话1分钟后内给您回电！" />
                         </div>
                         <button class="consultation-call">直接拨打</button>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
+
+<script>
+    (function() {
+        var _53code = document.createElement("script");
+        _53code.src = "https://tb.53kf.com/code/code/da4d1cfba7ad57adf0dc15031443df739/1";
+        var s = document.getElementsByTagName("script")[0];
+        console.log(s);
+        s.parentNode.insertBefore(_53code, s);
+    })();
+</script>
 
 </html>

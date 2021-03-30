@@ -30,7 +30,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'keyword', title: __('Keyword'), operate: 'LIKE'},
                         {field: 'mobile', title: __('Mobile'), operate: 'LIKE'},
                         {field: 'id', title: '访问地址', formatter: Controller.api.formatter.manageUrl, operate: false},
-                        {field: 'desc', title: __('Desc'), operate: false},
+                        // {field: 'desc', title: __('Desc'), operate: false},
                         {field: 'show_page', title: __("Show_page"), searchList: {"1":__('Show_page_yes'), "2":__('Show_page_no')}, formatter: Table.api.formatter.status, custom: {1: 'success', 2: 'danger'}},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate, buttons: [
